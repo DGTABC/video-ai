@@ -3,14 +3,13 @@ import subprocess
 import openai
 import os
 
+app = Flask(__name__)
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/')
 def home():
     return "OK"
-
-app = Flask(__name__)
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/process', methods=['POST'])
 def process():
@@ -48,8 +47,6 @@ def process():
     return jsonify({
         "result": response['choices'][0]['message']['content']
     })
-
-import os
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 3000))
