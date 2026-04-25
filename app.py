@@ -1,20 +1,20 @@
 from flask import Flask, request, jsonify
-import subprocess
-import openai
 import os
 
-
+app = Flask(__name__) 
 @app.route('/')
 def home():
     return "OK"
 
-app = Flask(__name__)
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
 @app.route('/process', methods=['POST'])
 def process():
-    url = request.json['url']
+    return {"result": "url"} 
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 3000))
+    app.run(host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 3000))
+    app.run(host="0.0.0.0", port=port)
 
     # 1. 영상 다운로드 (오디오만)
     subprocess.run(["yt-dlp", "-x", "--audio-format", "mp3", "-o", "audio.mp3", url])
